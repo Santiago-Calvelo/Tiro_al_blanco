@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-void print_results(char j[9][20], int points[9][4], int player, double tiros, double contC, double contE, double participantes, char posicion[100]) {
+void print_results(char j[9][20], int points[9][4], int player, double tiros, double contC, double contE, int participantes, char posicion[100]) {
     printf("%s\n", j[player]);
     for (int i = 0; i < tiros; i++) {
         if      (posicion[i] == 'c' || posicion[i] == 'C') printf("\tc: %d\n", points[player][0]);
@@ -11,7 +11,6 @@ void print_results(char j[9][20], int points[9][4], int player, double tiros, do
         else if (posicion[i] == 'f' || posicion[i] == 'F') printf("\tf: %d\n", points[player][3]); 
     }
     int tp = points[player][0] + points[player][1] + points[player][2] + points[player][3];
-    printf("%.2f\n", contE);
     double edad = (contE * 100) / participantes;
     printf("\tPuntos totales: %d\n", tp);
     printf("El porcentaje de tiros centrados del jugador es: %.2f\n", (contC * 100) / tiros);
@@ -19,7 +18,7 @@ void print_results(char j[9][20], int points[9][4], int player, double tiros, do
 }
 
 void game(char j[9][20], int points[9][4]) {
-    double participantes = 0.0;
+    int participantes = 0;
     char posicion[100];
     char n, p;
     int e;
@@ -49,10 +48,8 @@ void game(char j[9][20], int points[9][4]) {
             scanf(" %d", &e);
             getchar();
         
-            if (e < 18) {
-                contE++;
-                jugadores_ingresados[player] = true;
-            }
+            if (e < 18) contE++;
+            jugadores_ingresados[player] = true;
             participantes++;
             int i = 0;
 
@@ -89,7 +86,7 @@ void game(char j[9][20], int points[9][4]) {
                 }
             }
 
-            if (participantes >= 9.0) break;
+            if (participantes >= 9) break;
         }
     }
 
